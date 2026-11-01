@@ -1,7 +1,7 @@
 @use 'base' as *;
 @use 'mixins' as *;
 
-// ===== Модальні вікна =====
+// Модальні вікна
 .modal {
     width: min(720px, 100% - #{$space-4});
     max-height: calc(100dvh - #{$space-4});
@@ -38,7 +38,7 @@
     }
 }
 
-// ===== Форма «Нова тварина» =====
+// Форма «Нова тварина»
 .pet-form__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -144,7 +144,8 @@
     }
 }
 
-// ===== Вікно «Запис оформлено» =====
+// Вікно «Запис оформлено»
+
 .success__list {
     @include flex-column(0);
 

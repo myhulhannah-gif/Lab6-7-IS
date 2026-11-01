@@ -1,15 +1,15 @@
 import { BookingState } from './model';
 import type { Appointment, ClinicData, Pet } from './model';
-import { loadPets, saveAppointment, savePets } from './api';
+import { saveAppointment } from './api';
 import { initBranchMap } from './map';
 import { initPetForm } from './pet-form';
 import { createDateTimePicker } from './datetime';
 import { chevronRight } from './icons';
-import { $, escapeHtml, formatDateLong, formatPrice, placeholder, plural } from './utils';
+import { $, formatDateLong, formatPrice, placeholder } from './utils';
 
 // Форма запису на прийом: п'ять кроків + картка «Ваш запис»
 export function initBooking(data: ClinicData) {
-    const state = new BookingState(data, loadPets(data.pets));
+    const state = new BookingState(data, [...data.pets]);
     let pendingServiceId: string | null = null;
 
     const petPicker = $('pet-picker');
@@ -27,7 +27,7 @@ export function initBooking(data: ClinicData) {
     const map = initBranchMap(data.branches, (id) => selectBranch(id));
     const picker = createDateTimePicker(datetimeBox, state, renderSummary);
 
-    // ===== 1. Тварина =====
+    // 1. Тварина
     function renderPets(): void {
         const pet = state.pet;
         petToggleText.textContent = pet ? `${pet.name} (${pet.species.toLowerCase()})` : 'Оберіть тварину';
@@ -35,13 +35,13 @@ export function initBooking(data: ClinicData) {
             state.pets.length === 0
                 ? '<li class="pet-picker__empty">Тварин ще немає. Додайте першу.</li>'
                 : state.pets
-                      .map(
-                          (p) => `<li class="pet-picker__item${p.id === state.petId ? ' is-selected' : ''}" role="option" aria-selected="${p.id === state.petId}">
-                    <button type="button" class="pet-picker__choose" data-choose="${p.id}">${escapeHtml(p.name)} (${escapeHtml(p.species.toLowerCase())})</button>
-                    <button type="button" class="pet-picker__remove" data-remove="${p.id}" aria-label="Видалити ${escapeHtml(p.name)}">×</button>
+                    .map(
+                        (p) => `<li class="pet-picker__item${p.id === state.petId ? ' is-selected' : ''}" role="option" aria-selected="${p.id === state.petId}">
+                    <button type="button" class="pet-picker__choose" data-choose="${p.id}">${p.name} (${p.species.toLowerCase()})</button>
+                    <button type="button" class="pet-picker__remove" data-remove="${p.id}" aria-label="Видалити ${p.name}">×</button>
                 </li>`
-                      )
-                      .join('');
+                    )
+                    .join('');
     }
 
     function setPetListOpen(open: boolean): void {
@@ -85,7 +85,6 @@ export function initBooking(data: ClinicData) {
     $('delete-pet-confirm').addEventListener('click', () => {
         state.pets = state.pets.filter((p) => p.id !== petToDelete);
         if (state.petId === petToDelete) state.petId = null;
-        savePets(state.pets);
         petToDelete = null;
         deleteModal.close();
         renderPets();
@@ -94,20 +93,19 @@ export function initBooking(data: ClinicData) {
 
     initPetForm(data.species, (pet: Pet) => {
         state.pets.push(pet);
-        savePets(state.pets);
         state.petId = pet.id;
         renderPets();
         renderSummary();
     });
 
-    // ===== 2. Філія =====
+    // 2. Філія
     function renderBranches(): void {
         branchList.innerHTML = data.branches
             .map((b) => {
                 const selected = b.id === state.branchId;
                 return `<li><button type="button" class="branch-item${selected ? ' is-selected' : ''}" data-id="${b.id}" aria-pressed="${selected}">
                     <span class="branch-item__thumb"></span>
-                    <span class="branch-item__text"><strong>${escapeHtml(b.name)}</strong><span>${escapeHtml(b.address)}</span></span>
+                    <span class="branch-item__text"><strong>${b.name}</strong><span>${b.address}</span></span>
                     ${chevronRight}
                 </button></li>`;
             })
@@ -147,12 +145,11 @@ export function initBooking(data: ClinicData) {
         tabMap.setAttribute('aria-selected', String(isMap));
         branchList.hidden = isMap;
         mapPanel.hidden = !isMap;
-        if (isMap) map.activate();
     }
     tabList.addEventListener('click', () => setTab('list'));
     tabMap.addEventListener('click', () => setTab('map'));
 
-    // ===== 3. Послуги =====
+    // 3. Послуги
     function renderServices(): void {
         if (!state.branchId) {
             servicesBox.innerHTML = placeholder('Спочатку оберіть філію');
@@ -166,9 +163,9 @@ export function initBooking(data: ClinicData) {
                 const checked = state.serviceIds.includes(s.id) ? 'checked' : '';
                 return `<li class="service-row${ok ? '' : ' is-disabled'}">
                     <input class="service-row__input" type="checkbox" id="svc-${s.id}" data-id="${s.id}" ${checked} ${ok ? '' : 'disabled'}>
-                    <label class="service-row__name" for="svc-${s.id}">${escapeHtml(s.name)}</label>
+                    <label class="service-row__name" for="svc-${s.id}">${s.name}</label>
                     ${ok ? `<span class="service-row__price">${formatPrice(s.price)}</span>` : ''}
-                    <p class="service-row__desc"${ok ? ` data-full="${escapeHtml(`${s.duration} хв · ${s.description}`)}"` : ''}>${ok ? '' : 'Недоступно в цій філії'}</p>
+                    <p class="service-row__desc"${ok ? ` data-full="${s.duration} хв · ${s.description}"` : ''}>${ok ? '' : 'Недоступно в цій філії'}</p>
                 </li>`;
             })
             .join('')}</ul>`;
@@ -176,7 +173,6 @@ export function initBooking(data: ClinicData) {
     }
 
     // Кнопка «ще» потрібна лише тоді, коли опис не вміщується в один рядок
-    // Опис у один рядок: якщо не вміщується, обрізаємо текст так, щоб після «…» вмістилась кнопка «ще»
     function fitDescription(desc: HTMLElement): void {
         const full = desc.dataset.full;
         if (!full) return;
@@ -235,7 +231,7 @@ export function initBooking(data: ClinicData) {
         renderSummary();
     });
 
-    // ===== 4. Лікар =====
+    // 4. Лікар
     function renderDoctors(): void {
         if (!state.branchId || state.serviceIds.length === 0) {
             doctorBox.innerHTML = placeholder('Спочатку оберіть філію та послуги');
@@ -252,8 +248,8 @@ export function initBooking(data: ClinicData) {
                 return `<button type="button" class="doctor-card${selected ? ' is-selected' : ''}" data-id="${d.id}" aria-pressed="${selected}">
                     <img class="doctor-card__photo" src="${d.photo}" alt="">
                     <span class="doctor-card__text">
-                        <strong>${escapeHtml(d.name)}</strong>
-                        <span>${escapeHtml(d.specialty)} · ${d.experience} ${plural(d.experience, ['рік', 'роки', 'років'])} досвіду</span>
+                        <strong>${d.name}</strong>
+                        <span>${d.specialty} · стаж ${d.experience} р.</span>
                     </span>
                 </button>`;
             })
@@ -269,7 +265,7 @@ export function initBooking(data: ClinicData) {
         renderSummary();
     });
 
-    // ===== 5. Дата та час =====
+    // 5. Дата та час
     function renderDateTime(): void {
         if (!state.doctor) {
             datetimeBox.innerHTML = placeholder('Спочатку оберіть лікаря');
@@ -278,7 +274,7 @@ export function initBooking(data: ClinicData) {
         picker.render();
     }
 
-    // ===== Картка «Ваш запис» + розрахунок вартості =====
+    // Картка «Ваш запис» + розрахунок вартості
     function setValue(id: string, text: string | null): void {
         const el = $(id);
         el.textContent = text ?? 'Не обрано';
@@ -298,14 +294,14 @@ export function initBooking(data: ClinicData) {
             setValue('sum-services', null);
         } else {
             sumServices.classList.remove('is-empty');
-            sumServices.innerHTML = `<ul class="summary__services">${services.map((s) => `<li><span>${escapeHtml(s.name)}</span><span>${formatPrice(s.price)}</span></li>`).join('')}</ul>`;
+            sumServices.innerHTML = `<ul class="summary__services">${services.map((s) => `<li><span>${s.name}</span><span>${formatPrice(s.price)}</span></li>`).join('')}</ul>`;
         }
 
         $('sum-total').textContent = formatPrice(state.total());
         confirmBtn.disabled = !state.isComplete();
     }
 
-    // ===== Підтвердження запису =====
+    // Підтвердження запису
     confirmBtn.addEventListener('click', () => {
         if (!state.isComplete()) return;
         const { pet, branch, doctor, date, time } = state;
@@ -324,7 +320,7 @@ export function initBooking(data: ClinicData) {
             ['Час', time],
             ['Орієнтовна вартість', formatPrice(appointment.total)]
         ];
-        $('success-list').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join('');
+        $('success-list').innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
 
         successModal.showModal();
     });

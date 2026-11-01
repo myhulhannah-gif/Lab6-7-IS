@@ -33,7 +33,7 @@
     padding: $padding;
 }
 
-// Міксин пунктирного блоку-заглушки («Спочатку оберіть ...»)
+// Міксин блоку-заглушки
 @mixin placeholder-box {
     @include flex;
     min-height: 72px;
@@ -46,7 +46,7 @@
     border-radius: $radius-m;
 }
 
-// Міксин адаптивності за іменем точки: @include respond('tablet') { ... }
+// Міксин адаптивності за іменем точки
 @mixin respond($name) {
     @media (max-width: map.get($breakpoints, $name)) {
         @content;

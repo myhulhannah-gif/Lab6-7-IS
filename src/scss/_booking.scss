@@ -33,7 +33,7 @@
     font-weight: $fw-semibold;
 }
 
-// ===== 1. Тварина =====
+// 1. Тварина
 .pet-row {
     @include flex($space-2);
 
@@ -110,7 +110,7 @@
     }
 }
 
-// ===== 2. Філія =====
+// 2. Філія
 .city-pill {
     @include flex($space-1, flex-start);
     margin-bottom: $space-2;
@@ -152,6 +152,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: $space-1 + 4px;
+
+    li {
+        display: flex;
+    }
 
     &__empty {
         grid-column: 1 / -1;
@@ -203,7 +207,7 @@
     }
 }
 
-// ===== Карта =====
+// Карта
 .branch-map {
     position: relative;
     height: 340px;
@@ -212,29 +216,16 @@
     background: $color-surface;
 
     @include respond('mobile') {
-        height: 300px;
+        height: 320px;
     }
 
     &__canvas {
         position: absolute;
         inset: 0;
 
-        // Схематична карта, якщо Google Maps недоступна
         &.is-fallback {
             background: url('/img/map-big.png') center / cover;
         }
-    }
-
-    &__notice {
-        position: absolute;
-        top: $space-1;
-        left: $space-1;
-        right: $space-1;
-        padding: 6px $space-1 + 4px;
-        border-radius: $radius-s;
-        background: rgba($color-white, 0.9);
-        font-size: 12px;
-        color: $color-text-secondary;
     }
 }
 
@@ -286,9 +277,31 @@
         font-size: $p-small-size;
         color: $color-text-primary;
     }
+
+    @include respond('small') {
+    left: $space-1;
+    right: $space-1;
+    bottom: $space-1;
+    padding: $space-1 + 4px;
+    gap: $space-1;
+
+        &__name {
+            font-size: 13px;
+        }
+
+        &__address {
+            margin-top: 2px;
+            font-size: 12px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    }
 }
 
-// ===== 3. Послуги =====
+// 3. Послуги
 .service-list {
     border: 1px solid $color-border;
     border-radius: $radius-m;
@@ -405,7 +418,7 @@
     }
 }
 
-// ===== 4. Лікар =====
+// 4. Лікар
 .doctor-list {
     @include flex-column($space-1 + 4px);
 }
@@ -455,7 +468,7 @@
     }
 }
 
-// ===== Картка «Ваш запис» =====
+// Картка «Ваш запис»
 .summary {
     position: sticky;
     top: $header-height + $space-2;

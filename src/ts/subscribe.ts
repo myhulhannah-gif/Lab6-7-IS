@@ -25,7 +25,6 @@ export function initSubscribe(): void {
         if (!isError) timer = window.setTimeout(clearMessage, HIDE_AFTER_MS);
     }
 
-    // Користувач почав виправляти email: прибираємо помилку
     input.addEventListener('input', () => {
         if (input.classList.contains('is-invalid')) clearMessage();
     });

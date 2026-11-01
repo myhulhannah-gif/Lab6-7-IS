@@ -1,4 +1,3 @@
-// SVG-іконки, які потрібні при генерації розмітки з TypeScript
 const svg = (body: string) => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
 const stroke = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
 

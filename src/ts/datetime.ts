@@ -4,20 +4,20 @@ import { chevronLeft, chevronRight } from './icons';
 import { monthName, parseISO, toISO } from './utils';
 
 const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
-const MONTHS_AHEAD = 12; // гортати календар можна на рік уперед
+const MONTHS_AHEAD = 12;
 
-// Календар + список вільного часу обраного лікаря (крок 5)
+// Календар + список вільного часу обраного лікаря
 export function createDateTimePicker(box: HTMLElement, state: BookingState, onChange: () => void) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    // Запис відкритий лише на поточний і наступний місяць (до останнього дня наступного місяця)
+    // Запис відкритий лише на поточний і наступний місяць
     const lastBookable = new Date(today.getFullYear(), today.getMonth() + 2, 0);
     const view = { year: today.getFullYear(), month: today.getMonth() };
     let shownDate: string | null = null; // день, на який натиснув користувач
 
     const monthOffset = () => (view.year - today.getFullYear()) * 12 + (view.month - today.getMonth());
 
-    // Вільні години лікаря на дату (без зайнятих і тих, що вже минули)
+    // Вільні години лікаря на дату
     function freeTimes(iso: string): string[] {
         const doctorId = state.doctorId;
         if (!doctorId) return [];
@@ -105,7 +105,7 @@ export function createDateTimePicker(box: HTMLElement, state: BookingState, onCh
                     ${
                         next
                             ? `<p class="slots__hint">Наступна вільна дата:<br>${nextText}</p>
-                               <button type="button" class="btn btn--solid" data-action="nearest" data-date="${toISO(next)}">Перейдіть до найближчої дати</button>`
+                                <button type="button" class="btn btn--solid" data-action="nearest" data-date="${toISO(next)}">Перейдіть до найближчої дати</button>`
                             : '<p class="slots__hint">Найближчим часом вільних місць немає. Оберіть іншого лікаря.</p>'
                     }
                 </div>`;
@@ -130,7 +130,7 @@ export function createDateTimePicker(box: HTMLElement, state: BookingState, onCh
     }
 
     function render(): void {
-        // Якщо лікаря змінили (дату в стані скинуто), а показана дата була вільною — забуваємо її
+        // Якщо лікаря змінили, а показана дата була вільною - вона забувається
         if (shownDate && state.date === null && hasFree(parseISO(shownDate))) shownDate = null;
         box.innerHTML = `<div class="datetime">${calendarHtml()}<div class="datetime__slots slots">${slotsHtml()}</div></div>`;
     }

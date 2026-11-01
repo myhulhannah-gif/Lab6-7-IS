@@ -1,5 +1,5 @@
 import type { Gender, Pet } from './model';
-import { $, escapeHtml, toISO } from './utils';
+import { $, toISO } from './utils';
 
 // Валідація форми «Нова тварина»: кожна помилка містить причину і підказку (вимога ЛР3)
 type Fields = { name: string; species: string; breed: string; birthDate: string; chip: string };
@@ -41,7 +41,7 @@ export function initPetForm(species: string[], onSave: (pet: Pet) => void): void
     const speciesSelect = $<HTMLSelectElement>('pet-species');
     const birthInput = $<HTMLInputElement>('pet-birth');
 
-    speciesSelect.insertAdjacentHTML('beforeend', species.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join(''));
+    speciesSelect.insertAdjacentHTML('beforeend', species.map((s) => `<option value="${s}">${s}</option>`).join(''));
 
     const read = (): Fields => {
         const data = new FormData(form);

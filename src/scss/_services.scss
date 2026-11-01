@@ -6,9 +6,9 @@
     border-bottom: 1px solid $color-accent;
 }
 
-// ===== Слайдер послуг =====
+// Слайдер послуг
 .slider {
-    // Кількість карток, що видно одночасно (читається також у slider.ts)
+    // Кількість карток, що видно одночасно
     --per-view: 3;
     --gap: #{$space-3};
 
@@ -27,12 +27,12 @@
     }
 
     &__viewport {
-        // Відступи потрібні, щоб не обрізалась тінь карток
         overflow: hidden;
         padding: $space-2 $space-1;
         margin: (-$space-2) (-$space-1);
     }
 
+    // стрічка карток
     &__track {
         display: flex;
         gap: var(--gap);
@@ -81,7 +81,7 @@
     }
 }
 
-// ===== Картка послуги =====
+// Картка послуги
 .service-card {
     flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
     display: flex;

@@ -1,7 +1,7 @@
 @use 'base' as *;
 @use 'mixins' as *;
 
-// ===== Логотип (використовується і в шапці, і в підвалі) =====
+// Логотип
 .logo {
     @include flex($space-1 + 4px, flex-start);
     font-size: $h3-size;
@@ -76,7 +76,7 @@
     }
 }
 
-// ===== Бейдж користувача =====
+// Бейдж користувача
 .user {
     @include flex($space-1);
     padding: 4px $space-2 4px 4px;

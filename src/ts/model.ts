@@ -1,4 +1,4 @@
-// ===== Модель даних (відповідає структурі public/data.json) =====
+// Модель даних
 export type Gender = 'male' | 'female';
 
 export interface Branch {
@@ -67,7 +67,7 @@ export interface Appointment {
     total: number;
 }
 
-// ===== Стан форми запису та бізнес-правила =====
+// Стан форми запису та бізнес-правила
 export class BookingState {
     readonly data: ClinicData;
     pets: Pet[];
@@ -103,7 +103,7 @@ export class BookingState {
         return this.branchId !== null && service.branchIds.includes(this.branchId);
     }
 
-    // Лікарі обраної філії, які виконують УСІ обрані послуги
+    // Лікарі обраної філії, які виконують усі обрані послуги
     availableDoctors(): Doctor[] {
         const branchId = this.branchId;
         if (branchId === null || this.serviceIds.length === 0) return [];
@@ -115,10 +115,6 @@ export class BookingState {
     // Орієнтовна вартість = сума цін обраних послуг
     total(): number {
         return this.selectedServices.reduce((sum, s) => sum + s.price, 0);
-    }
-
-    totalDuration(): number {
-        return this.selectedServices.reduce((sum, s) => sum + s.duration, 0);
     }
 
     setBranch(id: string | null): void {
@@ -172,7 +168,12 @@ export class BookingState {
 
     // Якщо вибраний лікар більше не підходить — скидаємо його, дату й час
     private validateDoctor(): void {
-        if (this.doctorId !== null && !this.availableDoctors().some((d) => d.id === this.doctorId)) {
+        if (this.doctorId === null) return;
+
+        const suitable = this.availableDoctors();
+        const stillSuitable = suitable.some((d) => d.id === this.doctorId);
+
+        if (!stillSuitable) {
             this.doctorId = null;
             this.date = null;
             this.time = null;

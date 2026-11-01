@@ -1,7 +1,7 @@
 @use 'base' as *;
 @use 'mixins' as *;
 
-// ===== 5. Дата та час =====
+// 5. Дата та час
 .datetime {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -78,10 +78,6 @@
         &:disabled {
             color: $color-border;
             cursor: not-allowed;
-        }
-
-        &.is-outside:disabled {
-            color: $color-border;
         }
 
         &.is-today {

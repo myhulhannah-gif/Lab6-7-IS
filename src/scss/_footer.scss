@@ -6,7 +6,7 @@
     background: $color-footer;
     color: $color-white;
 
-    // ===== Підписка на нагадування =====
+    // Підписка на нагадування
     .subscribe {
         @include flex($space-2, flex-start);
         flex-wrap: wrap;
@@ -53,7 +53,7 @@
         }
     }
 
-    // ===== Основна частина підвалу =====
+    // Основна частина підвалу
     &__main {
         display: grid;
         grid-template-columns: 1fr repeat(3, auto);
