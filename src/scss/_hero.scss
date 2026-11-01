@@ -1,0 +1,71 @@
+@use 'base' as *;
+@use 'mixins' as *;
+
+.hero {
+    overflow: hidden;
+    padding-block: $space-6;
+    background: $color-bg-page;
+    border-bottom: 1px solid $color-text-muted;
+
+    &__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: $space-6;
+
+        @include respond('tablet') {
+            grid-template-columns: 1fr;
+            gap: $space-5;
+        }
+    }
+
+    &__lead {
+        margin: $space-3 0 $space-4;
+        font-size: 18px;
+        font-weight: $fw-medium;
+    }
+
+    &__media {
+        position: relative;
+        isolation: isolate;
+    }
+
+    &__circle {
+        position: absolute;
+        z-index: -1;
+        top: -14%;
+        right: -8%;
+        width: 52%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: $color-surface;
+    }
+
+    &__img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: $radius-l;
+    }
+
+    &__badge {
+        @include flex($space-1);
+        position: absolute;
+        right: $space-3;
+        bottom: $space-3;
+        padding: 10px $space-2;
+        border-radius: $radius-pill;
+        background: $color-white;
+        box-shadow: $shadow-card;
+        font-size: $p-small-size;
+        font-weight: $fw-semibold;
+
+        .icon {
+            color: $color-accent;
+        }
+    }
+
+    @include respond('mobile') {
+        padding-block: $space-5;
+    }
+}

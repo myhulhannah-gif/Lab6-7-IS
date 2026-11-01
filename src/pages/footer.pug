@@ -1,0 +1,26 @@
+include mixins.pug
+
+footer.footer#contacts
+    .container
+        form.subscribe#subscribe-form(novalidate)
+            label.subscribe__label(for='subscribe-email') Нагадування про щеплення
+            input#subscribe-email(type='email' placeholder='Email' autocomplete='email')
+            button.btn.btn--soft(type='submit') Підписатися
+            p.subscribe__msg#subscribe-msg(role='status')
+        .footer__main
+            a.logo.logo--light(href='#top')
+                span.logo__mark
+                    +icon('paw')
+                span.logo__text ВетКлініка
+            each col in [{ title: 'Адреси клініки', icon: 'pin', items: ['вул. Центральна, 10', 'просп. Південний, 25', 'вул. Північна, 7'] }, { title: 'Контакти', icon: null, items: [{ icon: 'phone', text: '+380 44 123 45 67', href: 'tel:+380441234567' }, { icon: 'mail', text: 'info@vetclinic.ua', href: 'mailto:info@vetclinic.ua' }] }, { title: 'Соцмережі', icon: null, items: [{ icon: 'instagram', text: 'Instagram', href: 'https://www.instagram.com/' }, { icon: 'facebook', text: 'Facebook', href: 'https://www.facebook.com/' }] }]
+                .footer__col
+                    h3= col.title
+                    ul
+                        each it in col.items
+                            li
+                                if typeof it === 'string'
+                                    +icon(col.icon)
+                                    span= it
+                                else
+                                    +icon(it.icon)
+                                    a(href=it.href target=(it.href.startsWith('http') ? '_blank' : false) rel='noopener')= it.text

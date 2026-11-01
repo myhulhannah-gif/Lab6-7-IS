@@ -1,0 +1,131 @@
+@use 'base' as *;
+@use 'mixins' as *;
+
+.services {
+    padding-block: $space-6;
+    border-bottom: 1px solid $color-accent;
+}
+
+// ===== Слайдер послуг =====
+.slider {
+    // Кількість карток, що видно одночасно (читається також у slider.ts)
+    --per-view: 3;
+    --gap: #{$space-3};
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: $space-2;
+
+    @include respond('tablet') {
+        --per-view: 2;
+    }
+
+    @include respond('small') {
+        --per-view: 1;
+        gap: $space-1;
+    }
+
+    &__viewport {
+        // Відступи потрібні, щоб не обрізалась тінь карток
+        overflow: hidden;
+        padding: $space-2 $space-1;
+        margin: (-$space-2) (-$space-1);
+    }
+
+    &__track {
+        display: flex;
+        gap: var(--gap);
+        transition: transform 0.4s ease;
+    }
+
+    &__arrow {
+        @include flex;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: $color-surface;
+        color: $color-accent;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover:not(:disabled) {
+            background: $color-accent;
+            color: $color-white;
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    &__dots {
+        @include flex($space-1);
+        margin-top: $space-3;
+    }
+
+    &__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: $radius-pill;
+        background: $color-surface;
+        cursor: pointer;
+        transition: width 0.3s, background-color 0.3s;
+
+        &.is-active {
+            width: 24px;
+            background: $color-accent;
+        }
+    }
+}
+
+// ===== Картка послуги =====
+.service-card {
+    flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: $radius-m;
+    background: $color-white;
+    box-shadow: $shadow-card;
+
+    &__img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+    }
+
+    &__body {
+        @include flex($space-2, space-between, flex-end);
+        padding: $space-2;
+    }
+
+    &__name {
+        margin-bottom: $space-1;
+        font-size: $p-size;
+        font-weight: $fw-medium;
+    }
+
+    &__meta {
+        @include flex($space-2, flex-start);
+        flex-wrap: wrap;
+        font-size: $p-small-size;
+        font-weight: $fw-medium;
+    }
+
+    &__duration {
+        @include flex(4px);
+        padding: 2px $space-1;
+        border-radius: $radius-pill;
+        background: $color-surface;
+        white-space: nowrap;
+        font-size: 12px;
+        color: $color-accent;
+    }
+
+    .btn {
+        padding: 6px $space-2;
+    }
+}

@@ -1,0 +1,117 @@
+include mixins.pug
+
+section.booking#booking
+    .container
+        h2.booking__title Запис на прийом
+        .booking__grid
+            .booking__steps
+                //- 1. Тварина
+                +step('step-pet', 1, 'Тварина')
+                    .pet-row
+                        .pet-picker#pet-picker
+                            button.pet-picker__toggle#pet-toggle(type='button' aria-haspopup='listbox' aria-expanded='false')
+                                span#pet-toggle-text Оберіть тварину
+                                +icon('chevron-down')
+                            ul.pet-picker__list#pet-list(role='listbox' hidden)
+                        button.btn.btn--outline#new-pet-btn(type='button') + Нова тварина
+
+                //- 2. Філія
+                +step('step-branch', 2, 'Філія')
+                    .city-pill
+                        +icon('pin')
+                        strong#city-name Кривий Ріг
+                    .tabs(role='tablist')
+                        button.tabs__btn.is-active#tab-list(type='button' role='tab' aria-selected='true' aria-controls='branch-list') Список
+                        button.tabs__btn#tab-map(type='button' role='tab' aria-selected='false' aria-controls='branch-map-panel') На карті
+                    ul.branch-list#branch-list
+                    .branch-map#branch-map-panel(hidden)
+                        .branch-map__canvas#map
+                        .map-card#map-card(hidden)
+                            div
+                                strong.map-card__name#map-card-name
+                                p.map-card__address#map-card-address
+                            button.btn.btn--solid#map-choose(type='button') Обрати
+
+                //- 3. Послуги
+                +step('step-services', 3, 'Послуги')
+                    #services-box
+                        p.placeholder Спочатку оберіть філію
+
+                //- 4. Лікар
+                +step('step-doctor', 4, 'Лікар')
+                    #doctor-box
+                        p.placeholder Спочатку оберіть філію та послуги
+
+                //- 5. Дата та час
+                +step('step-datetime', 5, 'Дата та час')
+                    #datetime-box
+                        p.placeholder Спочатку оберіть лікаря
+
+            aside.summary(aria-label='Ваш запис')
+                h3.summary__title Ваш запис
+                dl.summary__list
+                    each row in [{ id: 'sum-pet', label: 'Тварина:' }, { id: 'sum-branch', label: 'Філія:' }, { id: 'sum-services', label: 'Послуги:' }, { id: 'sum-doctor', label: 'Лікар:' }, { id: 'sum-date', label: 'Дата:' }, { id: 'sum-time', label: 'Час:' }]
+                        .summary__row
+                            dt= row.label
+                            dd(id=row.id) Не обрано
+                .summary__total
+                    p.summary__total-label Орієнтовна вартість
+                    p.summary__price#sum-total 0 грн
+                    button.btn.btn--solid.btn--block#confirm-btn(type='button' disabled) Підтвердити запис
+                    p.summary__note Остаточна вартість визначається в клініці
+
+//- Модальне вікно «Нова тварина»
+dialog.modal#pet-modal(aria-labelledby='pet-modal-title')
+    form.pet-form#pet-form(novalidate)
+        h2.modal__title#pet-modal-title Нова тварина
+        .pet-form__grid
+            .field
+                label(for='pet-name') Кличка *
+                input#pet-name(type='text' name='name' placeholder='Ім’я тварини' autocomplete='off')
+                p.field__error(data-error-for='name')
+            .field
+                label(for='pet-species') Вид *
+                .select
+                    select#pet-species(name='species')
+                        option(value='') Оберіть вид
+                    +icon('chevron-down')
+                p.field__error(data-error-for='species')
+            .field
+                label(for='pet-breed') Порода *
+                input#pet-breed(type='text' name='breed' placeholder='Введіть породу тварини' autocomplete='off')
+                p.field__error(data-error-for='breed')
+            .field
+                span.field__label Стать *
+                .radio-row
+                    each g in [{ value: 'male', label: 'Самець' }, { value: 'female', label: 'Самка' }]
+                        label.radio
+                            input(type='radio' name='gender' value=g.value checked=(g.value === 'male'))
+                            span.radio__mark
+                            span= g.label
+            .field
+                label(for='pet-birth') Дата народження *
+                input#pet-birth(type='date' name='birthDate')
+                p.field__error(data-error-for='birthDate')
+            .field
+                label(for='pet-chip') Номер чипа (за наявності)
+                input#pet-chip(type='text' name='chip' inputmode='numeric' placeholder='Введіть 15 цифр' autocomplete='off')
+                p.field__error(data-error-for='chip')
+        .modal__actions
+            button.btn.btn--outline#pet-cancel(type='button') Скасувати
+            button.btn.btn--solid#pet-save(type='submit') Зберегти
+
+//- Модальне вікно «Запис оформлено»
+dialog.modal.modal--narrow#success-modal(aria-labelledby='success-title')
+    .modal__body
+        h2.modal__title#success-title Запис оформлено
+        dl.success__list#success-list
+        .modal__actions
+            button.btn.btn--solid#success-close(type='button') Закрити
+
+//- Модальне вікно «Видалити тварину»
+dialog.modal.modal--narrow#delete-pet-modal(aria-labelledby='delete-pet-title')
+    h2.modal__title#delete-pet-title Видалити тварину?
+    p#delete-pet-text
+    .modal__actions
+        button.btn.btn--outline#delete-pet-cancel(type='button') Скасувати
+        button.btn.btn--danger#delete-pet-confirm(type='button') Видалити

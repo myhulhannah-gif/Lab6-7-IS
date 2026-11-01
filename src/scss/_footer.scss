@@ -1,0 +1,103 @@
+@use 'base' as *;
+@use 'mixins' as *;
+
+.footer {
+    padding-block: $space-4;
+    background: $color-footer;
+    color: $color-white;
+
+    // ===== Підписка на нагадування =====
+    .subscribe {
+        @include flex($space-2, flex-start);
+        flex-wrap: wrap;
+        row-gap: $space-1;
+        padding-bottom: $space-2;
+        border-bottom: 1px solid rgba($color-accent, 0.6);
+
+        &__label {
+            font-size: $p-small-size;
+            font-weight: $fw-semibold;
+        }
+
+        input {
+            width: 280px;
+            max-width: 100%;
+            padding: 10px $space-2;
+            border-radius: $radius-m;
+            background: $color-white;
+            color: $color-text-primary;
+            font-size: $p-small-size;
+
+            &::placeholder {
+                color: $color-text-muted;
+            }
+
+            &.is-invalid {
+                outline: 2px solid $color-error;
+            }
+        }
+
+        &__msg {
+            flex-basis: 100%;
+            font-size: 13px;
+            color: $color-surface;
+
+            // Поки повідомлення немає, місця воно не займає
+            &:empty {
+                display: none;
+            }
+
+            &.is-error {
+                color: #FFB4A8;
+            }
+        }
+    }
+
+    // ===== Основна частина підвалу =====
+    &__main {
+        display: grid;
+        grid-template-columns: 1fr repeat(3, auto);
+        align-items: center;
+        gap: $space-6;
+        padding-top: $space-4;
+
+        @include respond('tablet') {
+            grid-template-columns: 1fr 1fr;
+            align-items: start;
+            gap: $space-4;
+
+            .logo {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @include respond('small') {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__col {
+        align-self: start;
+
+        h3 {
+            margin-bottom: $space-2;
+            font-size: $h3-size;
+            font-weight: $fw-semibold;
+        }
+
+        ul {
+            @include flex-column($space-2);
+        }
+
+        li {
+            @include flex($space-1, flex-start);
+            font-size: $p-small-size;
+            font-weight: $fw-medium;
+
+            .icon {
+                color: $color-accent;
+                font-size: 18px;
+            }
+        }
+    }
+}

@@ -1,0 +1,174 @@
+@use 'base' as *;
+@use 'mixins' as *;
+
+[hidden] {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: $header-height + $space-2;
+}
+
+body {
+    font-family: $font-main;
+    font-size: $p-size;
+    color: $color-text-primary;
+    background: $color-white;
+    line-height: 1.4;
+    min-width: 360px;
+}
+
+h1 {
+    font-size: $h1-size;
+    font-weight: $fw-bold;
+    line-height: 1.15;
+
+    @include respond('mobile') {
+        font-size: 40px;
+    }
+}
+
+h2 {
+    font-size: $h2-size;
+    font-weight: $fw-semibold;
+}
+
+h3 {
+    font-size: $h3-size;
+    font-weight: $fw-medium;
+}
+
+p {
+    font-size: $p-size;
+    font-weight: $fw-regular;
+    color: $color-text-secondary;
+}
+
+button {
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container {
+    width: min(100% - #{$space-4}, #{$content-width});
+    margin-inline: auto;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.section-title {
+    margin-bottom: $space-4;
+}
+
+.card {
+    @include card;
+}
+
+// ===== Кнопки =====
+.btn {
+    @include flex($space-1);
+    display: inline-flex;
+    padding: 10px $space-3;
+    font-size: $p-small-size;
+    font-weight: $fw-semibold;
+    border-radius: $radius-s;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+    &--solid {
+        @include button($color-white, $color-accent);
+        border-color: $color-accent;
+
+        &:hover:not(:disabled) {
+            background: $color-accent-hover;
+            border-color: $color-accent-hover;
+        }
+    }
+
+    &--outline {
+        @include button($color-accent, $color-white);
+
+        &:hover:not(:disabled) {
+            @include button($color-white, $color-accent);
+        }
+    }
+
+    &--soft {
+        @include button($color-text-primary, $color-bg-page);
+        border-color: $color-bg-page;
+
+        &:hover:not(:disabled) {
+            background: $color-surface;
+            border-color: $color-surface;
+        }
+    }
+
+    &--danger {
+        @include button($color-white, $color-error);
+        border-color: $color-error;
+
+        &:hover:not(:disabled) {
+            background: shade($color-error, 10%);
+            border-color: shade($color-error, 10%);
+        }
+    }
+
+    &--block {
+        width: 100%;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        color: $color-text-secondary;
+        background: $color-surface;
+        border-color: $color-surface;
+    }
+
+    &:focus-visible {
+        outline: 2px solid shade($color-accent, 10%);
+        outline-offset: 2px;
+    }
+}
+
+// ===== Поля форм =====
+.select {
+    position: relative;
+    flex: 1;
+
+    select {
+        width: 100%;
+        padding: 10px 40px 10px 12px;
+        appearance: none;
+        background: $color-white;
+        border: 1px solid $color-accent;
+        border-radius: $radius-s;
+        font-size: $p-small-size;
+        cursor: pointer;
+    }
+
+    .icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $color-accent;
+        pointer-events: none;
+    }
+}
+
+.placeholder {
+    @include placeholder-box;
+}

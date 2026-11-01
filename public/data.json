@@ -1,0 +1,67 @@
+{
+  "city": "Кривий Ріг",
+  "user": { "name": "Марина Шевченко", "avatar": "/img/header-avatar.jpg" },
+  "branches": [
+    { "id": "center", "name": "ВетКлініка Центр", "address": "вул. Центральна, 10", "lat": 47.9105, "lng": 33.3918 },
+    { "id": "south", "name": "ВетКлініка Південний", "address": "просп. Південний, 25", "lat": 47.8890, "lng": 33.3650 },
+    { "id": "north", "name": "ВетКлініка Північ", "address": "вул. Північна, 7", "lat": 47.9440, "lng": 33.4010 }
+  ],
+  "services": [
+    { "id": "exam", "name": "Огляд лікаря", "duration": 30, "price": 350, "image": "/img/service-exam.png",
+      "description": "Загальний огляд тварини: оцінка стану шкіри, шерсті, зубів, серцевого ритму та загального самопочуття.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "consult", "name": "Консультація", "duration": 30, "price": 350, "image": "/img/service-consultation.jpg",
+      "description": "Розмова з лікарем щодо скарг, поведінки чи харчування тварини, складання плану лікування.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "vaccine", "name": "Вакцинація", "duration": 20, "price": 600, "image": "/img/service-vaccine.png",
+      "description": "Щеплення від основних інфекційних захворювань відповідно до віку та графіка вакцинації тварини.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "rabies", "name": "Щеплення від сказу", "duration": 15, "price": 300, "image": "/img/service-shcheplennya.png",
+      "description": "Обов'язкова вакцинація від сказу. Після процедури дані вносяться в ветеринарний паспорт тварини.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "chip", "name": "Мікрочипування", "duration": 15, "price": 500, "image": "/img/service-mycrochipjpg.jpg",
+      "description": "Введення ідентифікаційного чипа під шкіру та внесення його номера до реєстру і паспорта тварини.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "blood", "name": "Аналіз крові", "duration": 20, "price": 400, "image": "/img/service-blood_analisys.png",
+      "description": "Забір крові та розширений аналіз для оцінки загального стану здоров'я і роботи внутрішніх органів.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "uzd", "name": "УЗД", "duration": 30, "price": 700, "image": "/img/service-uzd.png",
+      "description": "Ультразвукове дослідження внутрішніх органів. Допомагає виявити приховані патології на ранніх стадіях.",
+      "branchIds": ["center", "south", "north"] },
+    { "id": "dental", "name": "Стоматологічна чистка", "duration": 45, "price": 900, "image": "/img/service-dentist.png",
+      "description": "Професійне очищення зубів від нальоту та каменю, огляд ротової порожнини.",
+      "branchIds": ["center", "north"] }
+  ],
+  "doctors": [
+    { "id": "ivanenko", "name": "Іваненко Олена", "specialty": "Терапевт", "experience": 8, "photo": "/img/doctor-1.png",
+      "branchIds": ["center", "south", "north"],
+      "serviceIds": ["exam", "consult", "vaccine", "rabies", "chip"],
+      "workDays": [1, 2, 3, 4, 5] },
+    { "id": "petrenko", "name": "Петренко Андрій", "specialty": "Хірург", "experience": 12, "photo": "/img/doctor-2.jpg",
+      "branchIds": ["center", "south"],
+      "serviceIds": ["exam", "consult", "blood", "uzd", "dental"],
+      "workDays": [1, 3, 4, 5, 6] },
+    { "id": "koval", "name": "Коваль Марія", "specialty": "Терапевт", "experience": 5, "photo": "/img/doctor-3.jpg",
+      "branchIds": ["south", "north"],
+      "serviceIds": ["exam", "consult", "vaccine", "rabies", "chip", "blood", "uzd"],
+      "workDays": [1, 2, 3, 4, 6] },
+    { "id": "shevchuk", "name": "Шевчук Тетяна", "specialty": "Стоматолог", "experience": 10, "photo": "/img/doctor-4.jpg",
+      "branchIds": ["center", "north"],
+      "serviceIds": ["exam", "consult", "dental"],
+      "workDays": [1, 2, 3, 4, 5] },
+    { "id": "melnyk", "name": "Мельник Олег", "specialty": "Діагност", "experience": 7, "photo": "/img/doctor-5.jpg",
+      "branchIds": ["center", "south", "north"],
+      "serviceIds": ["exam", "blood", "uzd"],
+      "workDays": [2, 3, 4, 6] }
+  ],
+  "timeSlots": {
+    "morning": ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30"],
+    "day": ["12:00", "12:30", "14:00", "14:30"],
+    "evening": ["16:00", "16:30", "17:00"]
+  },
+  "pets": [
+    { "id": "pet-1", "name": "Рекс", "species": "Собака", "breed": "Золотистий ретривер", "gender": "male", "birthDate": "2019-03-12", "chip": "" },
+    { "id": "pet-2", "name": "Мурка", "species": "Кіт", "breed": "Британська", "gender": "female", "birthDate": "2021-07-01", "chip": "" }
+  ],
+  "species": ["Собака", "Кіт", "Гризун", "Птах", "Інше"]
+}

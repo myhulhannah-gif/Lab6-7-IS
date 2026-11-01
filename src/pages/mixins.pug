@@ -1,0 +1,29 @@
+//- Міксини Pug: іконки та картка кроку запису
+
+mixin icon(name)
+    case name
+        when 'paw'
+            img.icon(src='/img/icons/paw.png' alt='' aria-hidden='true')
+        when 'pin'
+        when 'phone'
+        when 'mail'
+        when 'instagram'
+        when 'facebook'
+        when 'star'
+        when 'clock'
+            img.icon(src=`/img/icons/${name}.svg` alt='' aria-hidden='true')
+        when 'chevron-right'
+            svg.icon(viewBox='0 0 24 24' aria-hidden='true')
+                path(d='M9 5l7 7-7 7' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+        when 'chevron-left'
+            svg.icon(viewBox='0 0 24 24' aria-hidden='true')
+                path(d='M15 5l-7 7 7 7' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+        when 'chevron-down'
+            svg.icon(viewBox='0 0 24 24' aria-hidden='true')
+                path(d='M5 9l7 7 7-7' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round')
+
+//- Картка одного кроку запису: номер, заголовок та вміст блоку
+mixin step(id, number, title)
+    section.card.step(id=id)
+        h2.step__title #{number}. #{title}
+        block

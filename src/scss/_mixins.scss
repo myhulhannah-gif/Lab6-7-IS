@@ -1,0 +1,59 @@
+@use 'sass:color';
+@use 'sass:map';
+@use 'base' as *;
+
+// Міксин для горизонтальних флексів
+@mixin flex($gap: 0, $justify: center, $align: center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+}
+
+// Міксин для вертикальних флексів
+@mixin flex-column($gap: 0, $align: stretch) {
+    display: flex;
+    flex-direction: column;
+    align-items: $align;
+    gap: $gap;
+}
+
+// Міксин для задання кольору, фону та меж кнопок ($c — колір тексту й рамки, $bg — фон)
+@mixin button($c, $bg) {
+    color: $c;
+    background-color: $bg;
+    border: 1px solid $c;
+}
+
+// Міксин картки з білим фоном і тінню
+@mixin card($padding: $space-3) {
+    background: $color-white;
+    border-radius: $radius-l;
+    box-shadow: $shadow-card;
+    padding: $padding;
+}
+
+// Міксин пунктирного блоку-заглушки («Спочатку оберіть ...»)
+@mixin placeholder-box {
+    @include flex;
+    min-height: 72px;
+    padding: $space-2;
+    text-align: center;
+    color: $color-text-primary;
+    font-size: $p-small-size;
+    background: $color-bg-page;
+    border: 1px dashed $color-border;
+    border-radius: $radius-m;
+}
+
+// Міксин адаптивності за іменем точки: @include respond('tablet') { ... }
+@mixin respond($name) {
+    @media (max-width: map.get($breakpoints, $name)) {
+        @content;
+    }
+}
+
+// Функція: робить колір темнішим на відсоток (аналог darken)
+@function shade($c, $amount: 15%) {
+    @return color.adjust($c, $lightness: -$amount);
+}

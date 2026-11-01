@@ -1,0 +1,10 @@
+// Головний файл стилів: підключає всі часткові файли (partials)
+@use 'reset';
+@use 'common';
+@use 'header';
+@use 'hero';
+@use 'services';
+@use 'booking';
+@use 'datetime';
+@use 'footer';
+@use 'modal';

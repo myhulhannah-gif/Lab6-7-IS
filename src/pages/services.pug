@@ -1,0 +1,12 @@
+section.services#services
+    .container
+        h2.section-title Наші послуги
+        .slider
+            button.slider__arrow.slider__arrow--prev(type='button' id='slider-prev' aria-label='Попередні послуги')
+                +icon('chevron-left')
+            .slider__viewport(id='slider-viewport')
+                //- картки послуг рендеряться з data.json у ts/slider.ts
+                ul.slider__track(id='slider-track')
+            button.slider__arrow.slider__arrow--next(type='button' id='slider-next' aria-label='Наступні послуги')
+                +icon('chevron-right')
+        .slider__dots(id='slider-dots' role='tablist' aria-label='Сторінки слайдера')

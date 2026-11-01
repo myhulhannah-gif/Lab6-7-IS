@@ -1,0 +1,54 @@
+// ===== Кольори (з макета Figma) =====
+$color-bg-page: #F3F8F4;
+$color-surface: #D5E8D9;
+$color-accent: #2E7D4F;
+$color-accent-hover: #276B43;
+$color-text-secondary: #4F4F4F;
+$color-text-primary: #1F2A24;
+$color-text-muted: #8A9A8F;
+$color-white: #FFFFFF;
+$color-border: #CFE3D4;
+$color-error: #C0392B;
+$color-selected: #E4F1E7;
+$color-footer: #1F2A24;
+
+// ===== Розміри =====
+$content-width: 1200px;
+$header-height: 72px;
+$summary-width: 340px;
+$radius-s: 8px;
+$radius-m: 12px;
+$radius-l: 20px;
+$radius-pill: 999px;
+
+// ===== Шрифти =====
+$font-main: 'Inter', Arial, sans-serif;
+$h1-size: 56px;
+$h2-size: 32px;
+$h3-size: 18px;
+$p-size: 16px;
+$p-small-size: 14px;
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// ===== Відступи =====
+$space-1: 8px;
+$space-2: 16px;
+$space-3: 24px;
+$space-4: 32px;
+$space-5: 48px;
+$space-6: 64px;
+
+// ===== Тіні =====
+$shadow-card: 0 2px 8px rgba(31, 42, 36, 0.1);
+$shadow-pop: 0 8px 24px rgba(31, 42, 36, 0.18);
+
+// ===== Точки адаптивності (ЛР3: від 360 до 1920 px) =====
+$breakpoints: (
+    'tablet': 1024px,
+    'mobile': 768px,
+    'small': 480px
+);

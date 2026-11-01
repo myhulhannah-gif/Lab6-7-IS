@@ -1,0 +1,107 @@
+@use 'base' as *;
+@use 'mixins' as *;
+
+// ===== Логотип (використовується і в шапці, і в підвалі) =====
+.logo {
+    @include flex($space-1 + 4px, flex-start);
+    font-size: $h3-size;
+    font-weight: $fw-bold;
+
+    &__mark {
+        @include flex;
+        width: 32px;
+        height: 32px;
+        border-radius: $radius-s;
+        background: $color-accent;
+        color: $color-white;
+        font-size: 20px;
+    }
+
+    &--light {
+        color: $color-white;
+    }
+}
+
+// ===== Шапка =====
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: $color-white;
+    border-bottom: 1px solid $color-accent;
+
+    &__inner {
+        @include flex($space-3, space-between);
+        min-height: $header-height;
+    }
+
+    @include respond('tablet') {
+        position: static;
+
+        &__inner {
+            flex-wrap: wrap;
+            row-gap: $space-1;
+            padding-block: $space-1;
+        }
+    }
+}
+
+.nav {
+    flex: 1;
+
+    @include respond('tablet') {
+        order: 3;
+        flex-basis: 100%;
+    }
+}
+
+.main-menu {
+    @include flex($space-4);
+    flex-wrap: wrap;
+
+    li a {
+        display: block;
+        padding: $space-1 0;
+        font-size: $p-small-size;
+        font-weight: $fw-medium;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $color-accent;
+        }
+    }
+
+    @include respond('tablet') {
+        gap: 0 $space-3;
+    }
+}
+
+// ===== Бейдж користувача =====
+.user {
+    @include flex($space-1);
+    padding: 4px $space-2 4px 4px;
+    border: 1px solid $color-text-primary;
+    border-radius: $radius-pill;
+    font-size: $p-small-size;
+    font-weight: $fw-medium;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background: $color-bg-page;
+    }
+
+    &__avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    @include respond('small') {
+        &__name {
+            display: none;
+        }
+
+        padding-right: 4px;
+    }
+}

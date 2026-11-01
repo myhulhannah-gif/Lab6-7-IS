@@ -1,0 +1,14 @@
+header.header
+    .header__inner.container
+        a.logo(href='#top' aria-label='ВетКлініка — на початок')
+            span.logo__mark
+                +icon('paw')
+            span.logo__text ВетКлініка
+        nav.nav(aria-label='Основне меню')
+            ul.main-menu
+                each item in [{ title: 'Послуги', href: '#services' }, { title: 'Запис на прийом', href: '#booking' }, { title: 'Мої тварини', href: '#step-pet' }, { title: 'Лікарі', href: '#step-doctor' }, { title: 'Контакти', href: '#contacts' }]
+                    li
+                        a(href=item.href)= item.title
+        a.user(href='#booking' id='user-badge')
+            img.user__avatar(id='user-avatar' src='/img/header-avatar.jpg' alt='')
+            span.user__name(id='user-name') Марина Шевченко
